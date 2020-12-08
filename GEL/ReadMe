@@ -1,0 +1,1 @@
+python3 main.py --input ./data/karate.txt --output ./embeddings/output.txt --method node2vec --task link-prediction --eval-result-file eval_result.txt
