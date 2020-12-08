@@ -13,7 +13,7 @@ def more_main():
     #pipeline.pipeline(dataset = '../../data/karate.txt', output = '../../embeddings/emb.txt', method = 'Laplacian', task = 'link-prediction', dimensions = 10)
     #pipeline.pipeline(dataset = '../../data/karate.txt', output = '../../embeddings/emb.txt', method = 'GF', task = 'link-prediction',dimensions = 10)
     #pipeline.pipeline(dataset = '../../data/karate.txt', output = '../../embeddings/emb.txt', method = 'SVD', task = 'link-prediction',dimensions = 10)
-    pipeline.pipeline(dataset = '../../data/karate.txt', output = '../../embeddings/emb.txt', method = 'HOPE', task = 'link-prediction',dimensions = 2)
+    pipeline.pipeline(dataset = '../../data/facebook.txt', output = '../../embeddings/emb.txt', method = 'HOPE', task = 'link-prediction',dimensions = 2)
     #pipeline.pipeline(dataset = '../../data/karate.txt', output = '../../embeddings/emb.txt', method = 'GraRep', task = 'link-prediction',dimensions = 16)
     #pipeline.pipeline(dataset = '../../data/karate.txt', output = '../../embeddings/emb.txt', method = 'node2vec', task = 'link-prediction',dimensions = 10)
     #pipeline.pipeline(dataset = '../../data/karate.txt', output = '../../embeddings/emb.txt', method = 'DeepWalk', task = 'link-prediction',dimensions = 10)
