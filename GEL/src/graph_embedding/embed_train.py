@@ -32,7 +32,7 @@ def _embedding_training(args, G_=None):
     seed=args.seed
 
     if args.method == 'struc2vec':
-        logging.basicConfig(filename='./src/bionev/struc2vec/struc2vec.log', filemode='w', level=logging.DEBUG,
+        logging.basicConfig(filename='./src/graph_embedding/struc2vec/struc2vec.log', filemode='w', level=logging.DEBUG,
                             format='%(asctime)s %(message)s')
         if (args.OPT3):
             until_layer = args.until_layer

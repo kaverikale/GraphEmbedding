@@ -8,10 +8,10 @@ import time
 from argparse import ArgumentDefaultsHelpFormatter, ArgumentParser
 
 import numpy as np
-
+import matplotlib.pyplot as plt
 from graph_embedding.embed_train import embedding_training, load_embedding, read_node_labels, split_train_test_graph
 from graph_embedding.evaluation import LinkPrediction, NodeClassification
-import visualize_embedding as viz
+from visualization.visualize_embedding import *
 
 def parse_args():
     parser = ArgumentParser(formatter_class=ArgumentDefaultsHelpFormatter,
@@ -113,11 +113,18 @@ def parse_args():
     return args
 
 
+def visualize_embedding(embedding_look_up, i):
+    plot_embedding2D(embedding_look_up,
+                         i)
+    plt.show()
+
+
+
 def main(args):
     print('#' * 70)
     print('Embedding Method: %s, Evaluation Task: %s' % (args.method, args.task))
     print('#' * 70)
-
+    result = None
     if args.task == 'link-prediction':
         G, G_train, testing_pos_edges, train_graph_filename = split_train_test_graph(args.input, args.seed, weighted=args.weighted)
         time1 = time.time()
@@ -131,6 +138,7 @@ def main(args):
         eval_time = time.time() - time1
         print('Prediction Task Time: %.2f s' % eval_time)
         os.remove(train_graph_filename)
+        visualize_embedding(embedding_look_up, args.input)
     elif args.task == 'node-classification':
         if not args.label_file:
             raise ValueError("No input label file. Exit.")
@@ -146,19 +154,17 @@ def main(args):
         result = NodeClassification(embedding_look_up, node_list, labels, args.testingratio, args.seed)
         eval_time = time.time() - time1
         print('Prediction Task Time: %.2f s' % eval_time)
+        visualize_embedding(embedding_look_up, args.input)
     else:
         train_graph_filename = args.input
         time1 = time.time()
         embedding_training(args, train_graph_filename)
         embedding_look_up = load_embedding(args.output)
+        #print(embedding_look_up)
         
-        data = np.array(embedding_look_up.values())
-        print(data.size)
-        viz.plot_embedding2D(data[:, :2],
-                         di_graph=G, node_colors=None)
-        plt.show()
         embed_train_time = time.time() - time1
         print('Embedding Learning Time: %.2f s' % embed_train_time)
+        visualize_embedding(embedding_look_up, args.input)
 
     if args.eval_result_file and result:
         _results = dict(
