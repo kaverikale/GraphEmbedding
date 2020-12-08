@@ -32,8 +32,11 @@ class HOPE(object):
 	where M_g and M_l are both polynomial of matrices.
         '''
 
-        M_g = np.eye(graph.number_of_nodes())
-        M_l = np.dot(A, A)
+        #M_g = np.eye(graph.number_of_nodes())
+        #M_l = np.dot(A, A)
+
+        M_g = np.eye(len(graph.nodes)) - self._beta * A
+        M_l = self._beta * A
 
         S = np.dot(np.linalg.inv(M_g), M_l)
 
@@ -44,9 +47,8 @@ class HOPE(object):
         '''
 
         u, s, vt = lg.svds(S, k=self._d // 2)
-        sigma = np.diagflat(np.sqrt(s))
-        X1 = np.dot(u, sigma)
-        X2 = np.dot(vt.T, sigma)
+        X1 = np.dot(u, np.diag(np.sqrt(s)))
+        X2 = np.dot(vt.T, np.diag(np.sqrt(s)))
         
         self._X = np.concatenate((X1, X2), axis=1)
 

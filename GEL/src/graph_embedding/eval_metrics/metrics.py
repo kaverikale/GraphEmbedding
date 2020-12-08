@@ -42,13 +42,19 @@ def computeMRR(text_edges, y_test, y_pred, original_graph, max_k=-1):
             count += 1
         
         _, delta_factors = computePrecisionCurveAndRank(node_edges[i], original_graph, max_k)
-        print(i, delta_factors)
+        
         if(delta_factors.count(1.0) > 0):
             index = delta_factors.index(1.0)
             node_RR[i] = 1.0/(index + 1.0)
         else:
             node_RR[i] = 0
-    return sum(node_RR) / count
+    
+    if count == 0:
+        result = 0
+    else:
+        result = sum(node_RR) / count
+    return result
+
 def calculateMAP(text_edges, y_test, y_pred, original_graph, max_k=-1):
     node_num = len(original_graph.nodes)
     node_edges = []
@@ -74,7 +80,11 @@ def calculateMAP(text_edges, y_test, y_pred, original_graph, max_k=-1):
             node_AP[i] = 0
         else:
             node_AP[i] = float(sum(precision_rectified) / sum(delta_factors))
-    return sum(node_AP) / count
+    if count == 0:
+        result = 0
+    else:
+        result = sum(node_AP) / count
+    return result
 
 def computeMacroF1(predicted_nodes, true_nodes):
     macro = f1_score(true_nodes, predicted_nodes, average='macro') 

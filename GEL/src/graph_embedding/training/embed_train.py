@@ -9,14 +9,12 @@ from gensim.models.word2vec import LineSentence
 from graph_embedding.NN.train_model import gae_model
 from graph_embedding.MatrixFactorization import gf, grarep, hope, lap, line, node2vec, sdne
 from graph_embedding.SVD.model import SVD_embedding
-from graph_embedding.struc2vec import struc2vec
 from graph_embedding.training.utils import *
 
 
 def embedding_training(args, train_graph_filename):
-    if args.method == 'struc2vec':
-        g = read_for_struc2vec(train_graph_filename)
-    elif args.method == 'GAE':
+   
+    if args.method == 'GAE':
         g = read_for_gae(train_graph_filename)
     elif args.method == 'SVD':
         g = read_for_SVD(train_graph_filename, weighted=args.weighted)
@@ -29,42 +27,8 @@ def embedding_training(args, train_graph_filename):
 
 
 def _embedding_training(args, G_=None):
-    seed=args.seed
-
-    if args.method == 'struc2vec':
-        logging.basicConfig(filename='./src/graph_embedding/struc2vec/struc2vec.log', filemode='w', level=logging.DEBUG,
-                            format='%(asctime)s %(message)s')
-        if (args.OPT3):
-            until_layer = args.until_layer
-        else:
-            until_layer = None
-
-        G = struc2vec.Graph(G_, args.workers, untilLayer=until_layer)
-
-        if (args.OPT1):
-            G.preprocess_neighbors_with_bfs_compact()
-        else:
-            G.preprocess_neighbors_with_bfs()
-
-        if (args.OPT2):
-            G.create_vectors()
-            G.calc_distances(compactDegree=args.OPT1)
-        else:
-            G.calc_distances_all_vertices(compactDegree=args.OPT1)
-
-        print('create distances network..')
-        G.create_distances_network()
-        print('begin random walk...')
-        G.preprocess_parameters_random_walk()
-
-        G.simulate_walks(args.number_walks, args.walk_length)
-        print('walk finished..\nLearning embeddings...')
-        walks = LineSentence('random_walks.txt')
-        model = Word2Vec(walks, size=args.dimensions, window=args.window_size, min_count=0, hs=1, sg=1,
-                         workers=args.workers, seed=seed)
-        os.remove("random_walks.txt")
-        model.wv.save_word2vec_format(args.output)
-    elif args.method == 'GAE':
+    seed=args.seed    
+    if args.method == 'GAE':
         model = gae_model(args)
         G = G_[0]
         node_list = G_[1]

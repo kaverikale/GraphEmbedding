@@ -63,6 +63,7 @@ class Graph(object):
                 self.G.add_edge(dst, src)
                 self.G[src][dst]['weight'] = float(w)
                 self.G[dst][src]['weight'] = float(w)
+        print(filename)
         fin = open(filename, 'r')
         func = read_unweighted
         if weighted:
