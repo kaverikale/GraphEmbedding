@@ -58,7 +58,7 @@ class Graph(object):
 
             def read_weighted(l):
                 src, dst, w = l.split()
-                # print(src, dst, float(w))
+                
                 self.G.add_edge(src, dst)
                 self.G.add_edge(dst, src)
                 self.G[src][dst]['weight'] = float(w)

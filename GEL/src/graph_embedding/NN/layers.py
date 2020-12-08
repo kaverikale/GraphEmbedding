@@ -1,9 +1,6 @@
 
 import tensorflow as tf
-
-from graph_embedding.NN.initialization import *
-
-# global unique layer ID dictionary for layer name assignment
+import numpy as np
 _LAYER_UIDS = {}
 
 def weight_variable(input_dim, output_dim, name=""):

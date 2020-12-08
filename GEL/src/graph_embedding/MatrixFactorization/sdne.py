@@ -7,7 +7,6 @@ def fc_op(input_op, name, n_out, layer_collector, act_func=tf.nn.leaky_relu):
     with tf.name_scope(name) as scope:
         kernel = tf.Variable(tf.contrib.layers.xavier_initializer()([n_in, n_out]), dtype=tf.float32, name=scope + "w")
 
-        # kernel = tf.Variable(tf.random_normal([n_in, n_out]))
         biases = tf.Variable(tf.constant(0, shape=[1, n_out], dtype=tf.float32), name=scope + 'b')
 
         fc = tf.add(tf.matmul(input_op, kernel), biases)

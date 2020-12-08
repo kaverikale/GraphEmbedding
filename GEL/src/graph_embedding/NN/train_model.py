@@ -31,16 +31,16 @@ class gae_model(object):
         fout.close()
 
     def train(self, adj):
-        # Store original adjacency matrix (without diagonal entries) for later
+        
         adj_orig = adj
         adj_orig = adj_orig - sp.dia_matrix((adj_orig.diagonal()[np.newaxis, :], [0]), shape=adj_orig.shape)
         adj_orig.eliminate_zeros()
 
         adj_train = adj
         features = sp.identity(adj.shape[0])  # featureless
-        # Some preprocessing
+        
         adj_norm = preprocess_graph(adj)
-        # Define placeholders
+        
         self.placeholders = {
             'features': tf.sparse_placeholder(tf.float32),
             'adj': tf.sparse_placeholder(tf.float32),
@@ -94,13 +94,13 @@ class gae_model(object):
         # Train model
         for epoch in range(self.epochs):
             t = time.time()
-            # Construct feed dictionary
+            
             self.feed_dict = construct_feed_dict(adj_norm, adj_label, features, self.placeholders)
             self.feed_dict.update({self.placeholders['dropout']: self.dropout})
-            # Run single weight update
+            
             outs = self.sess.run([opt.opt_op, opt.cost, opt.accuracy], feed_dict=self.feed_dict)
 
-            # Compute average loss
+            
             avg_cost = outs[1]
             avg_accuracy = outs[2]
 
@@ -108,4 +108,4 @@ class gae_model(object):
                   "train_acc=", "{:.5f}".format(avg_accuracy),
                   "time=", "{:.5f}".format(time.time() - t))
 
-        print("Optimization Finished!")
+        

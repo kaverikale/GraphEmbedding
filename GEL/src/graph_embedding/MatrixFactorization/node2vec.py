@@ -1,8 +1,7 @@
 
-
 from gensim.models import Word2Vec
 
-from graph_embedding.GraphFactorization import walker
+from graph_embedding.MatrixFactorization import walker
 
 
 class Node2vec(object):

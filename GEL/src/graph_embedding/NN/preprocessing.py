@@ -31,13 +31,10 @@ def construct_feed_dict(adj_normalized, adj, features, placeholders):
 
 
 def mask_test_edges(adj):
-    # Function to build test set with 10% positive links
-    # NOTE: Splits are randomized and results might slightly deviate from reported numbers in the paper.
-
-    # Remove diagonal elements
+   
     adj = adj - sp.dia_matrix((adj.diagonal()[np.newaxis, :], [0]), shape=adj.shape)
     adj.eliminate_zeros()
-    # Check that diag is zero:
+   
     assert np.diag(adj.todense()).sum() == 0
 
     adj_triu = sp.triu(adj)
@@ -103,9 +100,9 @@ def mask_test_edges(adj):
 
     data = np.ones(train_edges.shape[0])
 
-    # Re-build adj matrix
+   
     adj_train = sp.csr_matrix((data, (train_edges[:, 0], train_edges[:, 1])), shape=adj.shape)
     adj_train = adj_train + adj_train.T
 
-    # NOTE: these edge lists only contain single direction of edge!
+    
     return adj_train, train_edges, val_edges, val_edges_false, test_edges, test_edges_false

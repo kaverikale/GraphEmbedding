@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 import math
 import random
@@ -7,7 +6,7 @@ import numpy as np
 import tensorflow as tf
 from sklearn.linear_model import LogisticRegression
 
-from graph_embedding.GraphFactorization.classify import Classifier, read_node_label
+from graph_embedding.MatrixFactorization.classify import Classifier, read_node_label
 
 
 class _LINE(object):
