@@ -9,7 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from graph_embedding.training.embed_train import embedding_training, load_embedding, read_node_labels, split_train_test_graph
 from graph_embedding.evaluation.evaluation import LinkPrediction, NodeClassification
-from visualization.visualize_embedding import *
+from visualization.visualize_embedding import plot_embedding2D
 
 
 class Args():
@@ -358,4 +358,3 @@ class Pipeline():
             with open(args.eval_result_file, 'a+') as wf:
                 print(json.dumps(_results, sort_keys=True), file=wf)
              
-
