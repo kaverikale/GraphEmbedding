@@ -6,7 +6,7 @@ import os
 import random
 import time
 
-from pipeline import *
+from pipeline import Pipeline
 
 def more_main():
     pipeline = Pipeline()

@@ -184,7 +184,7 @@ class Args():
         '''
            seed value
         '''
-        seed = 0
+        self.seed = 0
     
     def set_values(self,dataset ,output , testingratio, number_walks, walk_length, workers, dimensions ,window_size, epochs, p,
                          q , method, label_file, negative_ratio, weighted , directed, order, weight_decay,   kstep,
@@ -302,7 +302,7 @@ class Pipeline():
             os.remove(train_graph_filename)
             visualize_embedding(embedding_look_up, args.dataset, args.method)
         elif args.task == 'node-classification':
-            if not c.label_file:
+            if not label_file:
                 raise ValueError("No input label file. Exit.")
             node_list, labels = read_node_labels(args.label_file)
             train_graph_filename = args.dataset
